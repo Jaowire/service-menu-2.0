@@ -1,44 +1,23 @@
-# Taverna INFINITI Service Menu
+# Taverna INFINITI Service Menu — Render Static Site
 
-This folder is the Render-ready version of the service consultation app. It uses
-standard Next.js on Node.js and includes a Render Blueprint in `render.yaml`.
+This package preserves the current service-menu interface and exports it as
+static HTML, CSS, and JavaScript. Render serves the generated `out` folder from
+its CDN. No web server, health check, pnpm, or Corepack is required.
 
-## Replace the files in your existing GitHub repository
+## Replace the GitHub repository files
 
-1. Download and unzip the Render-ready package.
-2. Open your existing GitHub repository.
-3. Choose **Add file**, then **Upload files**.
-4. Upload the contents of the unzipped folder into the repository root. The
-   repository root should show `app`, `public`, `scripts`, `package.json`,
-   `pnpm-lock.yaml`, `pnpm-workspace.yaml`, and `render.yaml`.
-5. Select **Commit directly to the main branch**, then commit the changes.
+1. Download and extract the ZIP package.
+2. In the existing GitHub repository, remove the previously uploaded app files.
+3. Upload the contents inside this folder into the repository root.
+4. Confirm that `package.json`, `package-lock.json`, and `render.yaml` appear at
+   the top level—not inside another folder.
+5. Commit the changes directly to the `main` branch.
 
-Do not upload the outer folder as a single nested folder. `package.json` and
-`render.yaml` must be visible at the top level of the GitHub repository.
-The included TypeScript settings isolate this app from older Cloudflare or
-Vinext files that might still exist in the repository.
+## One-time Render change
 
-## Render settings
+An existing Render Web Service cannot be converted into a Static Site. Delete
+the failed Web Service in Render, without deleting the GitHub repository.
 
-If the Render service is already connected to this repository and automatic
-deploys are enabled, committing to `main` starts the deployment.
-
-For a new Render service, use **New > Blueprint** and choose the GitHub
-repository. Render reads these settings from `render.yaml`:
-
-- Runtime: Node
-- Build command:
-  `corepack enable && pnpm install --frozen-lockfile && pnpm build`
-- Start command: `pnpm start`
-- Health check: `/`
-- Automatic deploys: every commit
-
-The server listens on Render's assigned `PORT` and binds to `0.0.0.0`.
-
-## Local development
-
-```bash
-corepack enable
-pnpm install
-pnpm dev
-```
+Then select **New > Blueprint**, connect the same GitHub repository, and deploy.
+Render reads `render.yaml`, builds the site, and publishes the `out` directory.
+Every later commit to `main` automatically deploys.
